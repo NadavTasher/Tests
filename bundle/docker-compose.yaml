@@ -1,0 +1,26 @@
+version: "3"
+services:
+  ingress:
+    build: ingress
+    restart: unless-stopped
+    ports: 
+      - 80:80
+      - 443:443
+    volumes: 
+      # Ingress volume
+      - ingress_data:/data
+      - ingress_configuration:/config
+
+  statistics:
+    build: statistics
+    restart: unless-stopped    
+    volumes:
+      # Data volume
+      - statistics_data:/opt
+
+volumes:
+  # Ingress storage
+  ingress_data:
+  ingress_configuration:
+  # Statistics storage
+  statistics_data:

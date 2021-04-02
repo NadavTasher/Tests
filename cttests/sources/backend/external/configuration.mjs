@@ -8,6 +8,10 @@ export const Password = "";
 import { registerTest, registerPush } from "./platform.mjs";
 import { Second, Minute, Hour, Day, Week, Month, Year } from "./units.mjs";
 
-registerTest("CTF 1", (passed, failed) => {
-    
+registerInternal("CTF 1", (passed, failed) => {
+    setTimeout(() => {
+        passed();
+    }, 5000);
 }, 5 * Minute);
+
+registerExternal("CTF 2", "pastenino");

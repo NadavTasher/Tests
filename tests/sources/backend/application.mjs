@@ -10,7 +10,7 @@ import { Server } from "./internal/server.mjs";
 let mServer = new Server(8000);
 
 // Import the routes
-import { Routes } from "./external/statistics.mjs";
+import { Routes } from "./external/platform.mjs";
 
 // Enable the routes
 mServer.insertAll(Routes);

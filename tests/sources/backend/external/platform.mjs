@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2021 Nadav Tasher
- * https://github.com/NadavTasher/CTTests/
+ * https://github.com/NadavTasher/Tests/
  **/
 
 // Import utilities

@@ -1,14 +1,9 @@
 /**
  * Copyright (c) 2021 Nadav Tasher
- * https://github.com/NadavTasher/Statistics/
+ * https://github.com/NadavTasher/Tests/
  **/
 
-export const Password = "Default Password";
+export const Password = "";
 
-export const Tags = {
-    "tagID": "Description"
-};
-
-export const Endpoints = {
-    "HTTPHost": "Description"
-};
+import { registerTest, registerPush } from "./platform.mjs";
+import { Second, Minute, Hour, Day, Week, Month, Year } from "./units.mjs";

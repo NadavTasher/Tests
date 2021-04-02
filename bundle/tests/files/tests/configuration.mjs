@@ -3,13 +3,11 @@
  * https://github.com/NadavTasher/Tests/
  **/
 
-export const Password = "Test";
+export const Password = "";
 
 import { registerInternal, registerExternal } from "./platform.mjs";
 import { Second, Minute, Hour, Day, Week, Month, Year } from "./units.mjs";
 
 export function Setup() {
-    registerInternal("Nadav.app is up", (pass, fail) => {
-        setTimeout(pass, 5000);
-    }, 5 * Minute);
+    // Setup function
 };

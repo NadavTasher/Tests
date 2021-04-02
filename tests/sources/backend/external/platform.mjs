@@ -8,7 +8,7 @@ import { File } from "../internal/utilities.mjs";
 import { Second, Minute, Hour, Day, Week, Month, Year } from "./units.mjs";
 
 // Import configuration
-import { Password } from "./configuration.mjs";
+import { Password, Setup } from "./configuration.mjs";
 
 let Tests = {
     internal: {},
@@ -98,6 +98,9 @@ export function registerExternal(name, token) {
     // Create the token
     Tests.external[name].token = token;
 };
+
+// Execute the setup function
+Setup();
 
 // Export routes
 export const Routes = {

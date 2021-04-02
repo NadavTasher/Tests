@@ -59,8 +59,8 @@
         window.addEventListener("load", async function () {
             await Module.import("UI", "API", "External:Dialog");
 
-            // Statistic reading function
-            const statistics = (type) => {
+            // Result reading function
+            const results = (type) => {
                 // Read statistics
                 API.call(`${type}`, "list", {
                     password: localStorage.password
@@ -162,12 +162,14 @@
 
     <!-- Additional -->
     <template id="test">
-        <div stretch row>
-            <p small left>${name}</p>
+        <div coasted stretch row>
+            <div column>
+                <p medium left>${name}</p>
+                <p tiny left>${comment}</p>
+            </div>
             <div column>
                 <p tiny center>${status}</p>
                 <p tiny center>${time} - ${duration}</p>
-                <p tiny center>${comment}</p>
             </div>
         </div>
     </template>

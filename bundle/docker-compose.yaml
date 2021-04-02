@@ -3,8 +3,6 @@ services:
   tests:
     build: tests
     restart: unless-stopped
-    ports:
-      - 8000:80
     volumes:
       # Data volume
       - tests_data:/opt

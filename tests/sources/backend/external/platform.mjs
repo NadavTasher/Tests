@@ -8,7 +8,7 @@ import { File } from "../internal/utilities.mjs";
 import { Second, Minute, Hour, Day, Week, Month, Year } from "./units.mjs";
 
 // Import configuration
-import { Password, Tests } from "./configuration.mjs";
+import { Password } from "./configuration.mjs";
 
 let Tests = {
     internal: {},

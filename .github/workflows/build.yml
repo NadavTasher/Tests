@@ -46,13 +46,13 @@ jobs:
                     push: true
 
                     # What is out build context?
-                    file: statistics/Dockerfile
-                    context: statistics
+                    file: tests/Dockerfile
+                    context: tests
 
                     # What are our target platforms?
                     platforms: linux/amd64,linux/arm64/v8,linux/arm/v7,linux/ppc64le,linux/s390x
 
                     # What are our version tags?
                     tags: |
-                        nadavtasher/statistics:${{ env.DATE }}
-                        nadavtasher/statistics:${{ env.LATEST }}
+                        nadavtasher/tests:${{ env.DATE }}
+                        nadavtasher/tests:${{ env.LATEST }}

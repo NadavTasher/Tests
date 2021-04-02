@@ -1,0 +1,25 @@
+# Server settings
+{
+    admin off
+    auto_https off
+}
+
+# Listen on port 80
+:80
+
+# No cache policy
+header /* {
+    Cache-Control "no-cache"
+}
+
+# Match API requests
+route /api/* {
+    header Access-Control-Allow-Origin "*"
+	uri strip_prefix /api
+	reverse_proxy :8000
+}
+
+# Match static requests
+file_server /* {
+    root /project/frontend
+}

@@ -21,7 +21,7 @@
 
     <!-- Mobile Safari -->
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-title" content="CTTests" />
+    <meta name="apple-mobile-web-app-title" content="Tests" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
     <!-- Icons -->
@@ -62,39 +62,52 @@
             // Statistic reading function
             const statistics = (type) => {
                 // Read statistics
-                API.call(`${type}`, "fetch", {
+                API.call(`${type}`, "list", {
                     password: localStorage.password
                 }).then(
-                    (results) => {
-                        for (let [name, hits] of Object.entries(results)) {
-                            // Create entry
-                            let element = UI.populate("statistic", {
-                                name: name,
-                                hits: hits
-                            });
+                    (tests) => {
+                        for (let name of tests) {
+                            // Fetch status
+                            API.call(`${type}`, "status", {
+                                name: name
+                            }).then(
+                                (status) => {
+                                    // Create entry
+                                    let element = UI.populate("test", {
+                                        name: name,
+                                        status: status.status ? "Passed" : "Failed",
+                                        time: Math.floor((new Date().getTime() - status.time) / (1000 * 60)) + "m ago",
+                                        duration: Math.floor((status.duration) / (1000)) + "s",
+                                        comment: status.comment
+                                    });
 
-                            // Set click listener
-                            element.addEventListener("click", () => {
-                                Dialog.confirm(`Do you want to clear the statistics for "${name}"`).then(
-                                    () => {
-                                        API.call(`${type}`, "clear", {
-                                            name: name,
-                                            password: localStorage.password
-                                        }).then(
-                                            () => {
-                                                location.reload();
-                                            }
-                                        ).catch(
-                                            (error) => {
-                                                Dialog.alert(error);
-                                            }
-                                        );
+                                    // Add event listener
+                                    if (type === "internal") {
+                                        // Set click listener
+                                        element.addEventListener("click", () => {
+                                            Dialog.confirm(`Do you want to trigger "${name}"?`).then(
+                                                () => {
+                                                    API.call(`${type}`, "trigger", {
+                                                        name: name,
+                                                        password: localStorage.password
+                                                    }).then(
+                                                        () => {
+                                                            location.reload();
+                                                        }
+                                                    ).catch(
+                                                        (error) => {
+                                                            Dialog.alert(error);
+                                                        }
+                                                    );
+                                                }
+                                            ).catch();
+                                        });
                                     }
-                                ).catch();
-                            });
 
-                            // Append element
-                            UI.find(`${type}s`).appendChild(element);
+                                    // Append element
+                                    UI.find(`${type}`).appendChild(element);
+                                }
+                            ).catch();
                         }
                     }
                 ).catch();
@@ -122,8 +135,8 @@
                 }).then(
                     () => {
                         // Load statistics
-                        statistics("tag");
-                        statistics("endpoint");
+                        results("internal");
+                        results("external");
                     }
                 ).catch(
                     (error) => {
@@ -142,7 +155,7 @@
     </script>
 
     <!-- App Title -->
-    <title>CTTests</title>
+    <title>Tests</title>
 
     <!-- No Script -->
     <noscript></noscript>
@@ -154,7 +167,7 @@
             <div column>
                 <p tiny center>${status}</p>
                 <p tiny center>${time} - ${duration}</p>
-                <p tiny center>${reason}</p>
+                <p tiny center>${comment}</p>
             </div>
         </div>
     </template>
@@ -162,7 +175,10 @@
 
 <body column>
     <p large left>Tests</p>
-    <div id="tests"></div>
+    <p small left>Internal tests - (Interval)</p>
+    <div id="internal"></div>
+    <p small left>External tests - (Push)</p>
+    <div id="external"></div>
 </body>
 
 </html>
